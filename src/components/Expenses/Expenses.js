@@ -12,6 +12,38 @@ function Expenses(props) {
     console.log("selectedYear is " + selectedYear);
   };
 
+  // Display filtered Year - filter + map methods
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
+  //======= Conditions for whether there is an expense or not =======//
+  // 1. When there is no expense in the selected year
+  let expensesContent = <p>No expenses found.</p>;
+  // 2. When there is a expense in the selected year
+  if (filteredExpenses.length > 0) {
+    expensesContent = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+  /* ===========  THIS IS ALTERNATIVE WAY INSIDE RETURN  ============ */
+  /* {filteredExpenses.length === 0 && <p>No expenses found.</p>}
+        {filteredExpenses.length > 0 &&
+          filteredExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))} */
+  //==================================================================//
+
   return (
     <div>
       <Card className="expenses">
@@ -19,26 +51,7 @@ function Expenses(props) {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        <ExpenseItem
-          title={props.expenses[0].title}
-          amount={props.expenses[0].amount}
-          date={props.expenses[0].date}
-        />
-        <ExpenseItem
-          title={props.expenses[1].title}
-          amount={props.expenses[1].amount}
-          date={props.expenses[1].date}
-        />
-        <ExpenseItem
-          title={props.expenses[2].title}
-          amount={props.expenses[2].amount}
-          date={props.expenses[2].date}
-        />
-        <ExpenseItem
-          title={props.expenses[3].title}
-          amount={props.expenses[3].amount}
-          date={props.expenses[3].date}
-        />
+        {expensesContent}
       </Card>
     </div>
   );

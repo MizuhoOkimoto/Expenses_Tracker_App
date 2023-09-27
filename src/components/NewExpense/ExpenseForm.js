@@ -29,13 +29,12 @@ function ExpenseForm(props) {
     const expenseData = {
       title: enteredtitle,
       amount: enteredAmount,
-      date: new Date(enteredDate),
+      // ABOUT "T00:00:00" -> https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
+      date: new Date(enteredDate + "T00:00:00"),
     };
-
     // Use the expenseData as a parameter of the saveExpenseDataHandler
     // inside the NewExpense Component
     props.onSaveExpenseData(expenseData);
-
     // Set Two-Way Binding with adding 'value' in the input tag
     setEnteredTitle("");
     setEnteredAmount("");
